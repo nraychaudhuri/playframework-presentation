@@ -1,0 +1,10 @@
+<ul id="${_name}">
+  #{list items:_stories, as:'story'}
+    <li>
+      <label for="story1">${story.title}</label>
+      #{if _moveable}
+        <input type="checkbox" id="${story.id}">
+      #{/if}  
+    </li>
+  #{/list}
+</ul>

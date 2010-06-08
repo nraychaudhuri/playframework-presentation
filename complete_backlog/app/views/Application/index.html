@@ -1,0 +1,41 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+
+<h1 id="story_backlog">Story backlog</h1>
+
+#{form @Application.changeStatus()}
+<input type="hidden" name="storyId" id="storyId">
+<div id="layout">
+  <div id="onDeck" class="phase">
+    <h2>On Deck</h2>
+    #{listStories name:'onDeckStories', stories: onDeck, moveable: true /}
+  </div>  
+  <div id="inProgress" class="phase">
+    <h2>In Progress</h2>
+    #{listStories name:'inProgressStories', stories: inProgress, moveable: true /}
+  </div>  
+  <div id="Done" class="phase">
+    <h2>Done</h2>
+    #{listStories name:'doneStories', stories: done, moveable: false /}
+  </div>  
+</div>
+#{/form}
+
+<p class="clearFloat">
+  <a id="createStory" href="#">Create new Story</a>
+</p>
+
+<script type="text/javascript" charset="utf-8">
+  $("#createStory").click(function(){
+    $.post("@{createStory()}", {title: prompt('Story title?')}, function(story){
+      $('#onDeckStories').prepend(
+        '<li><label for="story">' + story.title + '</label><input type="checkbox" id="' + story.id + '"></li>'
+      )
+    })
+  })
+  
+  $("input").live('click', function() {    
+    $('#storyId').val($(this).attr('id'))
+    $('form').submit();
+  })
+</script>
