@@ -1,0 +1,20 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+
+<div>
+  <ul>
+    #{list items:stories, as:'story'}
+      <li><label for="story">${story.title}</label></li>
+    #{/list}
+  </ul>
+</div>
+
+<p>
+  <a href="#" id="createStory">Create new Story</a>
+</p>
+
+<script type="text/javascript">
+  $("#createStory").click(function() {
+    $.post("@{createStory()}", {title: prompt("what is your story title?")})
+  })
+</script>
